@@ -30,8 +30,7 @@ public class Menu {
   private String name;
 
   @OneToMany(
-          cascade = CascadeType.ALL,
-          orphanRemoval = true
+          cascade = CascadeType.ALL
   )
   @JsonIgnore
   private List<Pizza> pizzas = new ArrayList<>();
