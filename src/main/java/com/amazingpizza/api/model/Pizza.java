@@ -20,9 +20,9 @@ public class Pizza {
     private String name;
 
     @OneToMany(
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
     )
-    @JsonIgnore
     private List<Topping> toppings = new ArrayList<>();
 
     public Pizza(Long id, String name){

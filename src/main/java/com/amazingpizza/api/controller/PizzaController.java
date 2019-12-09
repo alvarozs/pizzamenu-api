@@ -30,4 +30,10 @@ public class PizzaController {
   public ResponseEntity<PizzaDTO> addToppingToPizza(@PathVariable Long pizzaId, @PathVariable Long toppingId) {
     return new ResponseEntity<PizzaDTO>(pizzaService.addTopping(pizzaId, toppingId), HttpStatus.CREATED);
   }
+
+  @DeleteMapping("/{pizzaId}/toppings/{toppingId}")
+  public ResponseEntity<String> deleteTopping(@PathVariable Long pizzaId, @PathVariable Long toppingId) {
+    pizzaService.deleteTopping(pizzaId, toppingId);
+    return new ResponseEntity<String>("Topping successfully deleted", HttpStatus.OK);
+  }
 }

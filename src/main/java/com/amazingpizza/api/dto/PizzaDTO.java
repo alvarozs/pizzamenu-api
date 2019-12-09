@@ -1,6 +1,5 @@
 package com.amazingpizza.api.dto;
 
-import com.amazingpizza.api.model.Topping;
 import lombok.*;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 public class PizzaDTO {
   private Long id;
   private String name;
-  private List<Topping> toppings;
+  private List<ToppingDTO> toppings;
 
   public PizzaDTO(Long id, String name) {
     this.id = id;

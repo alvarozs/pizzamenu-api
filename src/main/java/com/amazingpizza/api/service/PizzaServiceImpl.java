@@ -28,6 +28,8 @@ public class PizzaServiceImpl implements PizzaService {
   public List<PizzaDTO> getAllPizzas() {
     return pizzaRepository.findAll().stream().map(entity -> {
       PizzaDTO pizzaDTO = new PizzaDTO(entity.getId(), entity.getName());
+      pizzaDTO.setToppings(entity.getToppings().stream().map(
+              topping -> new ToppingDTO(topping.getId(), topping.getName())).collect(Collectors.toList()));
       return pizzaDTO;
     }).collect(Collectors.toList());
   }
@@ -61,6 +63,24 @@ public class PizzaServiceImpl implements PizzaService {
       e.printStackTrace();
     }
 
-    return new PizzaDTO(pizza.getId(), pizza.getName(), pizza.getToppings());
+    return new PizzaDTO(pizza.getId(), pizza.getName(), pizza.getToppings().stream().map(
+            topping -> new ToppingDTO(topping.getId(), topping.getName())
+    ).collect(Collectors.toList()));
+  }
+
+  @Override
+  public void deleteTopping(Long pizzaId, Long toppingId) {
+    Pizza pizza = null;
+    try {
+      pizza = pizzaRepository.findById(pizzaId).orElseThrow(() -> new PizzaNotFoundException(pizzaId));
+      ToppingDTO toppingDTO = toppingService.getToppingById(toppingId);
+      Topping topping = new Topping(toppingId, toppingDTO.getName());
+      pizza.getToppings().remove(topping);
+      pizzaRepository.save(pizza);
+    } catch (PizzaNotFoundException e) {
+      e.printStackTrace();
+    } catch (ToppingNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 }

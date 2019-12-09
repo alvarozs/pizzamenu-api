@@ -1,6 +1,5 @@
 package com.amazingpizza.api.service;
 
-import com.amazingpizza.api.dto.MenuDTO;
 import com.amazingpizza.api.dto.PizzaDTO;
 
 import java.util.List;
@@ -18,4 +17,6 @@ public interface PizzaService {
   PizzaDTO addPizza(PizzaDTO pizzaDTO);
 
   PizzaDTO addTopping(Long pizzaId, Long toppingId);
+
+  void deleteTopping(Long pizzaId, Long toppingId);
 }
