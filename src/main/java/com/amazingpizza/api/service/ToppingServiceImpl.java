@@ -42,4 +42,9 @@ public class ToppingServiceImpl implements ToppingService {
     Topping topping = toppingRepository.findById(toppingId).orElseThrow(() -> new ToppingNotFoundException(toppingId));
     return new ToppingDTO(toppingId, topping.getName());
   }
+
+  @Override
+  public void deleteTopping(Long toppingId) {
+    toppingRepository.deleteById(toppingId);
+  }
 }

@@ -12,4 +12,6 @@ public interface ToppingService {
   ToppingDTO addTopping(ToppingDTO toppingDTO);
 
   ToppingDTO getToppingById(Long toppingId) throws ToppingNotFoundException;
+
+  void deleteTopping(Long toppingId);
 }

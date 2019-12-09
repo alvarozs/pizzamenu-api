@@ -1,7 +1,6 @@
 package com.amazingpizza.api.controller;
 
 import com.amazingpizza.api.dto.MenuDTO;
-import com.amazingpizza.api.dto.PizzaDTO;
 import com.amazingpizza.api.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

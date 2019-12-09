@@ -1,7 +1,6 @@
 package com.amazingpizza.api.controller;
 
 import com.amazingpizza.api.dto.ToppingDTO;
-import com.amazingpizza.api.service.PizzaService;
 import com.amazingpizza.api.service.ToppingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,5 +24,11 @@ public class ToppingController {
   @PostMapping
   public ResponseEntity<ToppingDTO> addTopping(@Valid @RequestBody ToppingDTO toppingDTO) {
     return new ResponseEntity<ToppingDTO>(toppingService.addTopping(toppingDTO), HttpStatus.CREATED);
+  }
+
+  @DeleteMapping("/{toppingId}")
+  public ResponseEntity<String> deleteTopping(@PathVariable Long toppingId) {
+    toppingService.deleteTopping(toppingId);
+    return new ResponseEntity<String>("Topping successfully deleted", HttpStatus.OK);
   }
 }
