@@ -2,6 +2,7 @@ package com.amazingpizza.api.service;
 
 import com.amazingpizza.api.dto.MenuDTO;
 import com.amazingpizza.api.dto.PizzaDTO;
+import com.amazingpizza.api.dto.ToppingDTO;
 import com.amazingpizza.api.model.Menu;
 import com.amazingpizza.api.model.Pizza;
 import com.amazingpizza.api.repository.MenuRepository;
@@ -24,6 +25,13 @@ public class MenuServiceImpl implements MenuService {
   public List<MenuDTO> getAllMenus() {
     return menuRepository.findAll().stream().map(entity -> {
       MenuDTO menuDTO = new MenuDTO(entity.getId(), entity.getName());
+      menuDTO.setPizzas(entity.getPizzas().stream().map(
+              pizza -> {
+                PizzaDTO pizzaDTO = new PizzaDTO(pizza.getId(), pizza.getName());
+                pizzaDTO.setToppings(pizza.getToppings().stream().map(
+                        topping -> new ToppingDTO(topping.getId(), topping.getName())).collect(Collectors.toList()));
+                return pizzaDTO;
+              }).collect(Collectors.toList()));
       return menuDTO;
     }).collect(Collectors.toList());
   }
@@ -40,7 +48,8 @@ public class MenuServiceImpl implements MenuService {
     } catch (MenuNotFoundException e) {
       e.printStackTrace();
     }
-    return new MenuDTO(menu.getId(), menu.getName(), menu.getPizzas());
+    return new MenuDTO(menu.getId(), menu.getName(), menu.getPizzas().stream().map(
+            pizza -> new PizzaDTO(pizza.getId(), pizza.getName())).collect(Collectors.toList()));
   }
 
   @Override

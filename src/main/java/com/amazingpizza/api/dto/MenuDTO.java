@@ -1,9 +1,7 @@
 package com.amazingpizza.api.dto;
 
-import com.amazingpizza.api.model.Pizza;
 import lombok.*;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +20,7 @@ public class MenuDTO {
 
   private String name;
 
-  private List<Pizza> pizzas;
+  private List<PizzaDTO> pizzas;
 
   public MenuDTO(Long id, String name) {
     this.id = id;
