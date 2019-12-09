@@ -4,6 +4,7 @@ import com.amazingpizza.api.dto.ToppingDTO;
 import com.amazingpizza.api.model.Pizza;
 import com.amazingpizza.api.model.Topping;
 import com.amazingpizza.api.repository.ToppingRepository;
+import com.amazingpizza.api.service.exception.ToppingNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +29,17 @@ public class ToppingServiceImpl implements ToppingService {
     Topping topping = new Topping();
     topping.setName(toppingDTO.getName());
     Topping savedPizza = toppingRepository.save(topping);
-    return this.getToppingById(savedPizza.getId());
+    try {
+      return this.getToppingById(savedPizza.getId());
+    } catch (ToppingNotFoundException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   @Override
-  public ToppingDTO getToppingById(Long toppingId) {
-    Topping topping = toppingRepository.findById(toppingId).orElse(null);
+  public ToppingDTO getToppingById(Long toppingId) throws ToppingNotFoundException {
+    Topping topping = toppingRepository.findById(toppingId).orElseThrow(() -> new ToppingNotFoundException(toppingId));
     return new ToppingDTO(toppingId, topping.getName());
   }
 }

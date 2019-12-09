@@ -12,21 +12,22 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/menus")
 public class MenuController {
   @Autowired
   private MenuService menuService;
 
-  @GetMapping("/menus")
+  @GetMapping
   public ResponseEntity<List<MenuDTO>> getMenus() {
     return new ResponseEntity<List<MenuDTO>>(menuService.getAllMenus(), HttpStatus.OK);
   }
 
-  @PostMapping("/menus")
+  @PostMapping
   public ResponseEntity<MenuDTO> postMenus(@Valid @RequestBody MenuDTO menuDTO) {
     return new ResponseEntity<MenuDTO>(menuService.addMenu(menuDTO), HttpStatus.CREATED);
   }
 
-  @PostMapping("/menus/{menuId}/pizzas/{pizzaId}")
+  @PostMapping("/{menuId}/pizzas/{pizzaId}")
   public ResponseEntity<MenuDTO> addPizzaToMenu(@PathVariable Long menuId, @PathVariable Long pizzaId) {
     return new ResponseEntity<MenuDTO>(menuService.addPizza(menuId, pizzaId), HttpStatus.CREATED);
   }

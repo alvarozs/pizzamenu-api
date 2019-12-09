@@ -1,30 +1,34 @@
 package com.amazingpizza.api.controller;
 
+import com.amazingpizza.api.dto.MenuDTO;
 import com.amazingpizza.api.dto.PizzaDTO;
 import com.amazingpizza.api.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/pizzas")
 public class PizzaController {
   @Autowired
   private PizzaService pizzaService;
 
-  @GetMapping("/pizzas")
+  @GetMapping
   public ResponseEntity<List<PizzaDTO>> getPizzas() {
     return new ResponseEntity<List<PizzaDTO>>(pizzaService.getAllPizzas(), HttpStatus.OK);
   }
 
-  @PostMapping("/pizzas")
+  @PostMapping
   public ResponseEntity<PizzaDTO> addPizza(@Valid @RequestBody PizzaDTO pizzaDTO) {
     return new ResponseEntity<PizzaDTO>(pizzaService.addPizza(pizzaDTO), HttpStatus.CREATED);
+  }
+
+  @PostMapping("/{pizzaId}/toppings/{toppingId}")
+  public ResponseEntity<PizzaDTO> addToppingToPizza(@PathVariable Long pizzaId, @PathVariable Long toppingId) {
+    return new ResponseEntity<PizzaDTO>(pizzaService.addTopping(pizzaId, toppingId), HttpStatus.CREATED);
   }
 }
