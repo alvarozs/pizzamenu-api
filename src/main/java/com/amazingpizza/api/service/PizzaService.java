@@ -11,4 +11,8 @@ public interface PizzaService {
    * @return list of all pizzas
    */
   List<PizzaDTO> getAllPizzas();
+
+  PizzaDTO getPizzaById(Long pizzaId);
+
+  PizzaDTO addPizza(PizzaDTO pizzaDTO);
 }
