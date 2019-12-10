@@ -1,0 +1,28 @@
+version: "3"
+services:
+  pizzasmenudb:
+    image: "postgres"
+    container_name: "containerpizzasmenudb"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Control*123
+      - POSTGRES_DB=pizzasmenu
+      - POSTGRES_HOST=%
+    ports:
+      - "54320:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  pizzasmenuapi:
+    image: springboot-docker-compose-app:1
+    container_name: "containerpizzasmenuapi"
+    depends_on:
+      - pizzasmenudb
+    links:
+      - pizzasmenudb
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /data/springboot-docker-compose-app
+    ports:
+      - "8086:8086"
