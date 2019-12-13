@@ -1,5 +1,6 @@
 package com.amazingpizza.api.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.GeneratedValue;
@@ -16,10 +17,12 @@ import java.util.List;
 public class MenuDTO {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @ApiModelProperty(hidden = true)
   private Long id;
 
   private String name;
 
+  @ApiModelProperty(hidden = true)
   private List<PizzaDTO> pizzas;
 
   public MenuDTO(Long id, String name) {
