@@ -13,11 +13,10 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @ToString
 public class ToppingDTO {
-  @ApiModelProperty(hidden = true)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @ApiModelProperty(hidden = true)
   private Long id;
 
-  @ApiModelProperty(hidden = true)
   private String name;
 }

@@ -14,9 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class PizzaDTO {
-  @ApiModelProperty(hidden = true)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @ApiModelProperty(hidden = true)
   private Long id;
 
   private String name;
