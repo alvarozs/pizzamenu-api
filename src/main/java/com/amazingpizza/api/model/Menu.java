@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * According to my perspective Menu is a versionable and immutable entity, every time we modify the menu is a new version
@@ -33,5 +35,5 @@ public class Menu {
           cascade = CascadeType.ALL,
           fetch = FetchType.LAZY
   )
-  private List<Pizza> pizzas = new ArrayList<>();
+  private Set<Pizza> pizzas = new HashSet<>();
 }

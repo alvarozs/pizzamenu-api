@@ -1,19 +1,14 @@
 package com.amazingpizza.api.service;
 
-import com.amazingpizza.api.dto.MenuDTO;
-import com.amazingpizza.api.dto.PizzaDTO;
-import com.amazingpizza.api.dto.ToppingDTO;
-import com.amazingpizza.api.model.Menu;
 import com.amazingpizza.api.model.Pizza;
 import com.amazingpizza.api.model.Topping;
 import com.amazingpizza.api.repository.PizzaRepository;
-import com.amazingpizza.api.service.exception.MenuNotFoundException;
 import com.amazingpizza.api.service.exception.PizzaNotFoundException;
 import com.amazingpizza.api.service.exception.ToppingNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,23 +20,18 @@ public class PizzaServiceImpl implements PizzaService {
   private ToppingService toppingService;
 
   @Override
-  public List<PizzaDTO> getAllPizzas() {
-    return pizzaRepository.findAll().stream().map(entity -> {
-      PizzaDTO pizzaDTO = new PizzaDTO(entity.getId(), entity.getName());
-      pizzaDTO.setToppings(entity.getToppings().stream().map(
-              topping -> new ToppingDTO(topping.getId(), topping.getName())).collect(Collectors.toList()));
-      return pizzaDTO;
-    }).collect(Collectors.toList());
+  public Set<Pizza> getAllPizzas() {
+    return pizzaRepository.findAll().stream().map(entity -> new Pizza(entity.getId(), entity.getName())).collect(Collectors.toSet());
   }
 
   @Override
-  public PizzaDTO getPizzaById(Long pizzaId) {
+  public Pizza getPizzaById(Long pizzaId) {
     Pizza pizza = pizzaRepository.findById(pizzaId).orElse(null);
-    return new PizzaDTO(pizzaId, pizza.getName());
+    return new Pizza(pizzaId, pizza.getName());
   }
 
   @Override
-  public PizzaDTO addPizza(PizzaDTO pizzaDTO) {
+  public Pizza addPizza(Pizza pizzaDTO) {
     Pizza pizza = new Pizza();
     pizza.setName(pizzaDTO.getName());
     Pizza savedPizza = pizzaRepository.save(pizza);
@@ -49,13 +39,12 @@ public class PizzaServiceImpl implements PizzaService {
   }
 
   @Override
-  public PizzaDTO addTopping(Long pizzaId, Long toppingId) {
+  public Pizza addTopping(Long pizzaId, Long toppingId) {
     Pizza pizza = null;
     try {
       pizza = pizzaRepository.findById(pizzaId).orElseThrow(() -> new PizzaNotFoundException(pizzaId));
-      ToppingDTO toppingDTO = toppingService.getToppingById(toppingId);
-      Topping topping = new Topping(toppingId, toppingDTO.getName());
-      pizza.getToppings().add(topping);
+      Topping topping = toppingService.getToppingById(toppingId);
+      pizza.addTopping(topping);
       pizzaRepository.save(pizza);
     } catch (PizzaNotFoundException e) {
       e.printStackTrace();
@@ -63,9 +52,7 @@ public class PizzaServiceImpl implements PizzaService {
       e.printStackTrace();
     }
 
-    return new PizzaDTO(pizza.getId(), pizza.getName(), pizza.getToppings().stream().map(
-            topping -> new ToppingDTO(topping.getId(), topping.getName())
-    ).collect(Collectors.toList()));
+    return new Pizza(pizza.getId(), pizza.getName());
   }
 
   @Override
@@ -73,8 +60,7 @@ public class PizzaServiceImpl implements PizzaService {
     Pizza pizza = null;
     try {
       pizza = pizzaRepository.findById(pizzaId).orElseThrow(() -> new PizzaNotFoundException(pizzaId));
-      ToppingDTO toppingDTO = toppingService.getToppingById(toppingId);
-      Topping topping = new Topping(toppingId, toppingDTO.getName());
+      Topping topping = toppingService.getToppingById(toppingId);
       pizza.getToppings().remove(topping);
       pizzaRepository.save(pizza);
     } catch (PizzaNotFoundException e) {

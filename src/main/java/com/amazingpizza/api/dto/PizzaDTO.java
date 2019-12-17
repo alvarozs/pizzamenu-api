@@ -6,7 +6,8 @@ import lombok.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class PizzaDTO {
   private String name;
 
   @ApiModelProperty(hidden = true)
-  private List<ToppingDTO> toppings;
+  private Set<ToppingDTO> toppings = new HashSet<>();;
 
   public PizzaDTO(Long id, String name) {
     this.id = id;

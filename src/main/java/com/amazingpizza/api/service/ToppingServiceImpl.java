@@ -1,7 +1,5 @@
 package com.amazingpizza.api.service;
 
-import com.amazingpizza.api.dto.ToppingDTO;
-import com.amazingpizza.api.model.Pizza;
 import com.amazingpizza.api.model.Topping;
 import com.amazingpizza.api.repository.ToppingRepository;
 import com.amazingpizza.api.service.exception.ToppingNotFoundException;
@@ -9,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ToppingServiceImpl implements ToppingService {
@@ -17,20 +14,15 @@ public class ToppingServiceImpl implements ToppingService {
   private ToppingRepository toppingRepository;
 
   @Override
-  public List<ToppingDTO> getAllToppings() {
-    return toppingRepository.findAll().stream().map(entity -> {
-      ToppingDTO pizzaDTO = new ToppingDTO(entity.getId(), entity.getName());
-      return pizzaDTO;
-    }).collect(Collectors.toList());
+  public List<Topping> getAllToppings() {
+    return toppingRepository.findAll();
   }
 
   @Override
-  public ToppingDTO addTopping(ToppingDTO toppingDTO) {
-    Topping topping = new Topping();
-    topping.setName(toppingDTO.getName());
-    Topping savedPizza = toppingRepository.save(topping);
+  public Topping addTopping(Topping topping) {
+    Topping savedTopping = toppingRepository.save(topping);
     try {
-      return this.getToppingById(savedPizza.getId());
+      return this.getToppingById(topping.getId());
     } catch (ToppingNotFoundException e) {
       e.printStackTrace();
     }
@@ -38,9 +30,9 @@ public class ToppingServiceImpl implements ToppingService {
   }
 
   @Override
-  public ToppingDTO getToppingById(Long toppingId) throws ToppingNotFoundException {
+  public Topping getToppingById(Long toppingId) throws ToppingNotFoundException {
     Topping topping = toppingRepository.findById(toppingId).orElseThrow(() -> new ToppingNotFoundException(toppingId));
-    return new ToppingDTO(toppingId, topping.getName());
+    return topping;
   }
 
   @Override

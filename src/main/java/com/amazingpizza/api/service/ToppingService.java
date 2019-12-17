@@ -1,17 +1,17 @@
 package com.amazingpizza.api.service;
 
-import com.amazingpizza.api.dto.ToppingDTO;
+import com.amazingpizza.api.model.Topping;
 import com.amazingpizza.api.service.exception.ToppingNotFoundException;
 
 import java.util.List;
 
 public interface ToppingService {
 
-  List<ToppingDTO> getAllToppings();
+  List<Topping> getAllToppings();
 
-  ToppingDTO addTopping(ToppingDTO toppingDTO);
+  Topping addTopping(Topping topping);
 
-  ToppingDTO getToppingById(Long toppingId) throws ToppingNotFoundException;
+  Topping getToppingById(Long toppingId) throws ToppingNotFoundException;
 
   void deleteTopping(Long toppingId);
 }

@@ -1,32 +1,39 @@
 package com.amazingpizza.api.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Pizza {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String name;
+  private String name;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private List<Topping> toppings = new ArrayList<>();
+  @ManyToMany
+  @JoinTable(name = "pizza_topping",
+          joinColumns = { @JoinColumn(name = "pizza_id") },
+          inverseJoinColumns = { @JoinColumn(name = "topping_id") })
+  private Set<Topping> toppings = new HashSet<>();
 
-    public Pizza(Long id, String name){
-        this.id = id;
-        this.name = name;
-    }
+  public Pizza(Long id, String name){
+      this.id = id;
+      this.name = name;
+  }
+
+  /**
+   * Adds the given topping to the pizza
+   * @param topping
+   */
+  public void addTopping(Topping topping) {
+    toppings.add(topping);
+  }
 }

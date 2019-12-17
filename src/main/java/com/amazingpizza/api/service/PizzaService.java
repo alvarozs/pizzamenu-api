@@ -1,8 +1,7 @@
 package com.amazingpizza.api.service;
+import com.amazingpizza.api.model.Pizza;
 
-import com.amazingpizza.api.dto.PizzaDTO;
-
-import java.util.List;
+import java.util.Set;
 
 public interface PizzaService {
 
@@ -10,13 +9,13 @@ public interface PizzaService {
    * Retrieves all the pizzas in the system
    * @return list of all pizzas
    */
-  List<PizzaDTO> getAllPizzas();
+  Set<Pizza> getAllPizzas();
 
-  PizzaDTO getPizzaById(Long pizzaId);
+  Pizza getPizzaById(Long pizzaId);
 
-  PizzaDTO addPizza(PizzaDTO pizzaDTO);
+  Pizza addPizza(Pizza pizza);
 
-  PizzaDTO addTopping(Long pizzaId, Long toppingId);
+  Pizza addTopping(Long pizzaId, Long toppingId);
 
   void deleteTopping(Long pizzaId, Long toppingId);
 }

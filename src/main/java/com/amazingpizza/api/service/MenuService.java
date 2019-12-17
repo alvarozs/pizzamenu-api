@@ -1,10 +1,9 @@
 package com.amazingpizza.api.service;
 
-import com.amazingpizza.api.dto.MenuDTO;
 import com.amazingpizza.api.model.Menu;
 import com.amazingpizza.api.service.exception.MenuNotFoundException;
 
-import java.util.List;
+import java.util.Set;
 
 public interface MenuService {
 
@@ -12,14 +11,14 @@ public interface MenuService {
    * Retrieves all the pizzas in the system
    * @return list of all pizzas
    */
-  List<MenuDTO> getAllMenus();
+  Set<Menu> getAllMenus();
 
   /**
    * Adds a pizza definition to the menu.
    * This could be a HATEOS approach, the response could contains the next endpoit to request GET /pizza
    * @return the Menu update with the new pizza
    */
-  MenuDTO addPizza(Long menuId, Long pizzaId);
+  Menu addPizza(Long menuId, Long pizzaId);
 
   /**
    * Gets Menu by given Id
@@ -31,8 +30,8 @@ public interface MenuService {
 
   /**
    * Registers a new menu
-   * @param menuDTO the new menu to register
+   * @param menu the new menu to register
    * @return the created Menu
    */
-  MenuDTO addMenu(MenuDTO menuDTO);
+  Menu addMenu(Menu menu);
 }
