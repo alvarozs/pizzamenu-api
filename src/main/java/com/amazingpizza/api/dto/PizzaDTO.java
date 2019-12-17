@@ -9,11 +9,10 @@ import javax.persistence.Id;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@EqualsAndHashCode(exclude = {"toppings"})
 public class PizzaDTO {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

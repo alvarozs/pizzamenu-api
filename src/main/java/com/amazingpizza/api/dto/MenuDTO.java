@@ -10,11 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class MenuDTO {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

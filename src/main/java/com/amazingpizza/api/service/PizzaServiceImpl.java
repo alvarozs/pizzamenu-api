@@ -21,7 +21,7 @@ public class PizzaServiceImpl implements PizzaService {
 
   @Override
   public Set<Pizza> getAllPizzas() {
-    return pizzaRepository.findAll().stream().map(entity -> new Pizza(entity.getId(), entity.getName())).collect(Collectors.toSet());
+    return pizzaRepository.findAll().stream().collect(Collectors.toSet());
   }
 
   @Override
