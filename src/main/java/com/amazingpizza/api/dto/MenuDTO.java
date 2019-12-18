@@ -9,22 +9,39 @@ import javax.persistence.Id;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ *
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class MenuDTO {
+  /**
+   *
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @ApiModelProperty(hidden = true)
-  private Long id;
+  private Long menuId;
 
+  /**
+   *
+   */
   private String name;
 
+  /**
+   *
+   */
   @ApiModelProperty(hidden = true)
-  private Set<PizzaDTO> pizzas = new HashSet<>();;
+  private Set<PizzaDTO> pizzas = new HashSet<>();
 
-  public MenuDTO(Long id, String name) {
-    this.id = id;
+  /**
+   *
+   * @param menuId
+   * @param name
+   */
+  public MenuDTO(final Long menuId, final String name) {
+    this.menuId = menuId;
     this.name = name;
   }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
 @Service
 public class PizzaServiceImpl implements PizzaService {
   @Autowired
@@ -25,25 +26,23 @@ public class PizzaServiceImpl implements PizzaService {
   }
 
   @Override
-  public Pizza getPizzaById(Long pizzaId) {
-    Pizza pizza = pizzaRepository.findById(pizzaId).orElse(null);
+  public Pizza getPizzaById(final Long pizzaId) {
+    final Pizza pizza = pizzaRepository.findById(pizzaId).orElse(null);
     return new Pizza(pizzaId, pizza.getName());
   }
 
   @Override
-  public Pizza addPizza(Pizza pizzaDTO) {
-    Pizza pizza = new Pizza();
-    pizza.setName(pizzaDTO.getName());
-    Pizza savedPizza = pizzaRepository.save(pizza);
-    return this.getPizzaById(savedPizza.getId());
+  public Pizza addPizza(final Pizza pizza) {
+    final Pizza savedPizza = pizzaRepository.save(pizza);
+    return this.getPizzaById(savedPizza.getPizzaId());
   }
 
   @Override
-  public Pizza addTopping(Long pizzaId, Long toppingId) {
+  public Pizza addTopping(final Long pizzaId, final Long toppingId) {
     Pizza pizza = null;
     try {
       pizza = pizzaRepository.findById(pizzaId).orElseThrow(() -> new PizzaNotFoundException(pizzaId));
-      Topping topping = toppingService.getToppingById(toppingId);
+      final Topping topping = toppingService.getToppingById(toppingId);
       pizza.addTopping(topping);
       pizzaRepository.save(pizza);
     } catch (PizzaNotFoundException e) {
@@ -52,15 +51,15 @@ public class PizzaServiceImpl implements PizzaService {
       e.printStackTrace();
     }
 
-    return new Pizza(pizza.getId(), pizza.getName());
+    return new Pizza(pizza.getPizzaId(), pizza.getName());
   }
 
   @Override
-  public void deleteTopping(Long pizzaId, Long toppingId) {
+  public void deleteTopping(final Long pizzaId, final Long toppingId) {
     Pizza pizza = null;
     try {
       pizza = pizzaRepository.findById(pizzaId).orElseThrow(() -> new PizzaNotFoundException(pizzaId));
-      Topping topping = toppingService.getToppingById(toppingId);
+      final Topping topping = toppingService.getToppingById(toppingId);
       pizza.getToppings().remove(topping);
       pizzaRepository.save(pizza);
     } catch (PizzaNotFoundException e) {

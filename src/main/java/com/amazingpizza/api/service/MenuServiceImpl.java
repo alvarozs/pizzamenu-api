@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
 @Service
 public class MenuServiceImpl implements MenuService {
   @Autowired
@@ -20,16 +21,17 @@ public class MenuServiceImpl implements MenuService {
 
   @Override
   public Set<Menu> getAllMenus() {
-    return menuRepository.findAll().stream().collect(Collectors.toSet());
+    return menuRepository.findAll().stream().collect(Collectors.toSet());//NOPMD
   }
 
   @Override
-  public Menu addPizza(Long menuId, Long pizzaId) {
+  public Menu addPizza(final Long menuId, final Long pizzaId) {
     Menu menu = null;
     try {
       menu = this.getMenuById(menuId);
-      Pizza pizza = pizzaService.getPizzaById(pizzaId);
-      menu.getPizzas().add(pizza);
+      final Pizza pizza = pizzaService.getPizzaById(pizzaId);
+      final Set<Pizza> pizzas = menu.getPizzas();
+      pizzas.add(pizza);
       menuRepository.save(menu);
     } catch (MenuNotFoundException e) {
       e.printStackTrace();
@@ -38,16 +40,12 @@ public class MenuServiceImpl implements MenuService {
   }
 
   @Override
-  public Menu getMenuById(Long menuId) throws MenuNotFoundException {
-    Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new MenuNotFoundException(menuId));
-    return menu;
+  public Menu getMenuById(final Long menuId) throws MenuNotFoundException {
+    return menuRepository.findById(menuId).orElseThrow(() -> new MenuNotFoundException(menuId));//NOPMD
   }
 
   @Override
-  public Menu addMenu(Menu menuDTO) {
-    Menu menu = new Menu();
-    menu.setName(menuDTO.getName());
-    menuRepository.save(menu);
-    return menu;
+  public Menu addMenu(final Menu menu) {
+    return menuRepository.save(menu);
   }
 }

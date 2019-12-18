@@ -1,7 +1,7 @@
 package com.amazingpizza.api.service.exception;
 
 public class ToppingNotFoundException extends Exception {
-  public ToppingNotFoundException(Long toppingId) {
-    super();
+  public ToppingNotFoundException(final Long toppingId) {
+    super(String.format("Topping with id %s not found.", toppingId));
   }
 }

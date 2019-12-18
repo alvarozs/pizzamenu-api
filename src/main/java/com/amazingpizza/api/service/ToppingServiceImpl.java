@@ -8,35 +8,52 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ *
+ */
+@NoArgsConstructor
 @Service
 public class ToppingServiceImpl implements ToppingService {
   @Autowired
   private ToppingRepository toppingRepository;
 
+  /**
+   *
+   * @return
+   */
   @Override
   public List<Topping> getAllToppings() {
     return toppingRepository.findAll();
   }
 
+  /**
+   *
+   * @param topping
+   * @return
+   */
   @Override
-  public Topping addTopping(Topping topping) {
-    Topping savedTopping = toppingRepository.save(topping);
-    try {
-      return this.getToppingById(topping.getId());
-    } catch (ToppingNotFoundException e) {
-      e.printStackTrace();
-    }
-    return null;
+  public Topping addTopping(final Topping topping) {
+    return toppingRepository.save(topping);
   }
 
+  /**
+   *
+   * @param toppingId
+   * @return
+   * @throws ToppingNotFoundException
+   */
   @Override
-  public Topping getToppingById(Long toppingId) throws ToppingNotFoundException {
-    Topping topping = toppingRepository.findById(toppingId).orElseThrow(() -> new ToppingNotFoundException(toppingId));
-    return topping;
+  public Topping getToppingById(final Long toppingId) throws ToppingNotFoundException {
+    return toppingRepository.findById(
+            toppingId).orElseThrow(() -> new ToppingNotFoundException(toppingId));
   }
 
+  /**
+   *
+   * @param toppingId
+   */
   @Override
-  public void deleteTopping(Long toppingId) {
+  public void deleteTopping(final Long toppingId) {
     toppingRepository.deleteById(toppingId);
   }
 }

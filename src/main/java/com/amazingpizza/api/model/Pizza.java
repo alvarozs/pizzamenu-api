@@ -8,26 +8,45 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ *
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = {"toppings"})
 @Entity
 public class Pizza {
+
+  /**
+   *
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @Column(name = "id")
+  private Long pizzaId;
 
+  /**
+   *
+   */
   private String name;
 
+  /**
+   *
+   */
   @ManyToMany
   @JoinTable(name = "pizza_topping",
           joinColumns = { @JoinColumn(name = "pizza_id") },
           inverseJoinColumns = { @JoinColumn(name = "topping_id") })
   private Set<Topping> toppings = new HashSet<>();
 
-  public Pizza(Long id, String name){
-      this.id = id;
+  /**
+   *
+   * @param pizzaId
+   * @param name
+   */
+  public Pizza(final Long pizzaId, final String name){
+      this.pizzaId = pizzaId;
       this.name = name;
   }
 
@@ -35,7 +54,7 @@ public class Pizza {
    * Adds the given topping to the pizza
    * @param topping
    */
-  public void addTopping(Topping topping) {
+  public void addTopping(final Topping topping) {
     toppings.add(topping);
   }
 }
