@@ -19,7 +19,7 @@ public class PizzaMenuApiApplication {
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurerAdapter() {
 			@Override
-			public void addCorsMappings(CorsRegistry registry) {
+			public void addCorsMappings(final CorsRegistry registry) {
 				registry.addMapping("/**");
 			}
 		};
@@ -36,7 +36,7 @@ public class PizzaMenuApiApplication {
 		return new ModelMapper();
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		SpringApplication.run(PizzaMenuApiApplication.class, args);
 	}
 

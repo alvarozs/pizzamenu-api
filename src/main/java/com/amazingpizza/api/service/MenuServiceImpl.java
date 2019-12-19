@@ -4,6 +4,9 @@ import com.amazingpizza.api.model.Menu;
 import com.amazingpizza.api.model.Pizza;
 import com.amazingpizza.api.repository.MenuRepository;
 import com.amazingpizza.api.service.exception.MenuNotFoundException;
+import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Service
 public class MenuServiceImpl implements MenuService {
+  private static final Logger LOG = LogManager.getLogger(MenuServiceImpl.class);
+
   @Autowired
   private MenuRepository menuRepository;
 
@@ -34,8 +39,9 @@ public class MenuServiceImpl implements MenuService {
       pizzas.add(pizza);
       menuRepository.save(menu);
     } catch (MenuNotFoundException e) {
-      e.printStackTrace();
+      LOG.error(e.getMessage());
     }
+
     return menu;
   }
 

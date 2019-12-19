@@ -51,7 +51,7 @@ public class PizzaController {
    * @return the just inserted pizza.
    */
   @PostMapping
-  public ResponseEntity<PizzaDTO> addPizza(@Valid @RequestBody PizzaDTO pizzaDTO) {
+  public ResponseEntity<PizzaDTO> addPizza(final @Valid @RequestBody PizzaDTO pizzaDTO) {
     return new ResponseEntity<>(mapToDTO(pizzaService.addPizza(mapToEntity(pizzaDTO))), HttpStatus.CREATED);
   }
 
@@ -62,8 +62,8 @@ public class PizzaController {
    * @return the just updated pizza.
    */
   @PostMapping("/{pizzaId}/toppings/{toppingId}")
-  public ResponseEntity<PizzaDTO> addToppingToPizza(@PathVariable Long pizzaId, @PathVariable Long toppingId) {
-    return new ResponseEntity<PizzaDTO>(mapToDTO(pizzaService.addTopping(pizzaId, toppingId)), HttpStatus.CREATED);
+  public ResponseEntity<PizzaDTO> addToppingToPizza(final @PathVariable Long pizzaId, final @PathVariable Long toppingId) {
+    return new ResponseEntity<>(mapToDTO(pizzaService.addTopping(pizzaId, toppingId)), HttpStatus.CREATED);
   }
 
   /**
@@ -73,18 +73,16 @@ public class PizzaController {
    * @return a success message.
    */
   @DeleteMapping("/{pizzaId}/toppings/{toppingId}")
-  public ResponseEntity<String> deleteTopping(@PathVariable Long pizzaId, @PathVariable Long toppingId) {
+  public ResponseEntity<String> deleteToppingFromPizza(final @PathVariable Long pizzaId, final @PathVariable Long toppingId) {
     pizzaService.deleteTopping(pizzaId, toppingId);
     return new ResponseEntity<>("Topping successfully deleted", HttpStatus.OK);
   }
 
-  private PizzaDTO mapToDTO(Pizza pizza) {
-    PizzaDTO pizzaDTO = modelMapper.map(pizza, PizzaDTO.class);
-    return pizzaDTO;
+  private PizzaDTO mapToDTO(final Pizza pizza) {
+    return modelMapper.map(pizza, PizzaDTO.class);
   }
 
-  private Pizza mapToEntity(PizzaDTO pizzaDTO) {
-    Pizza pizza = modelMapper.map(pizzaDTO, Pizza.class);
-    return pizza;
+  private Pizza mapToEntity(final PizzaDTO pizzaDTO) {
+    return modelMapper.map(pizzaDTO, Pizza.class);
   }
 }

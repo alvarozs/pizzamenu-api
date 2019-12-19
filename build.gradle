@@ -2,6 +2,9 @@ plugins {
 	id 'org.springframework.boot' version '2.2.2.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id 'checkstyle'
+	id 'pmd'
+	id 'jacoco'
 }
 
 group = 'com.amazing-pizza'
@@ -44,6 +47,15 @@ dependencies {
 
 	// model mapper
 	compile 'org.modelmapper:modelmapper:2.3.5'
+
+	// logging
+	compile 'org.springframework.boot:spring-boot-starter-log4j2'
+}
+
+configurations {
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
 }
 
 bootRun {

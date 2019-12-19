@@ -5,6 +5,9 @@ import com.amazingpizza.api.model.Topping;
 import com.amazingpizza.api.repository.PizzaRepository;
 import com.amazingpizza.api.service.exception.PizzaNotFoundException;
 import com.amazingpizza.api.service.exception.ToppingNotFoundException;
+import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,8 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Service
 public class PizzaServiceImpl implements PizzaService {
+  private static final Logger LOG = LogManager.getLogger(PizzaServiceImpl.class);
+
   @Autowired
   private PizzaRepository pizzaRepository;
 
@@ -45,10 +50,8 @@ public class PizzaServiceImpl implements PizzaService {
       final Topping topping = toppingService.getToppingById(toppingId);
       pizza.addTopping(topping);
       pizzaRepository.save(pizza);
-    } catch (PizzaNotFoundException e) {
-      e.printStackTrace();
-    } catch (ToppingNotFoundException e) {
-      e.printStackTrace();
+    } catch (PizzaNotFoundException | ToppingNotFoundException e) {
+      LOG.error(e.getMessage());
     }
 
     return new Pizza(pizza.getPizzaId(), pizza.getName());
@@ -62,10 +65,8 @@ public class PizzaServiceImpl implements PizzaService {
       final Topping topping = toppingService.getToppingById(toppingId);
       pizza.getToppings().remove(topping);
       pizzaRepository.save(pizza);
-    } catch (PizzaNotFoundException e) {
-      e.printStackTrace();
-    } catch (ToppingNotFoundException e) {
-      e.printStackTrace();
+    } catch (PizzaNotFoundException | ToppingNotFoundException e) {
+      LOG.error(e.getMessage());
     }
   }
 }
