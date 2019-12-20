@@ -3,16 +3,21 @@ package com.amazingpizza.api.controller;
 import com.amazingpizza.api.dto.PizzaDTO;
 import com.amazingpizza.api.model.Pizza;
 import com.amazingpizza.api.service.PizzaService;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.validation.Valid;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.Set;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST Controller for Pizza resource.
@@ -40,8 +45,9 @@ public class PizzaController {
    */
   @GetMapping
   public ResponseEntity<Set<PizzaDTO>> getPizzas() {
+    final Set<Pizza> pizzas = pizzaService.getAllPizzas();
     return new ResponseEntity<>(
-            pizzaService.getAllPizzas().stream().map(this::mapToDTO).collect(Collectors.toSet()), //NOPMD
+            pizzas.stream().map(this::mapToDTO).collect(Collectors.toSet()), //NOPMD
             HttpStatus.OK);
   }
 
@@ -63,7 +69,7 @@ public class PizzaController {
    */
   @PostMapping("/{pizzaId}/toppings/{toppingId}")
   public ResponseEntity<PizzaDTO> addToppingToPizza(final @PathVariable Long pizzaId, final @PathVariable Long toppingId) {
-    return new ResponseEntity<>(mapToDTO(pizzaService.addTopping(pizzaId, toppingId)), HttpStatus.CREATED);
+    return new ResponseEntity<>(mapToDTO(pizzaService.addToppingToPizza(pizzaId, toppingId)), HttpStatus.CREATED);
   }
 
   /**

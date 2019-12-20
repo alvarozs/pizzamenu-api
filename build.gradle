@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id 'checkstyle'
 	id 'pmd'
+	id 'idea'
 	id 'jacoco'
 }
 
@@ -64,4 +65,17 @@ bootRun {
 
 test {
 	useJUnitPlatform()
+}
+
+checkstyle {
+	toolVersion '8.24'
+	configFile file("config/checkstyle/google_checks.xml")
+}
+
+checkstyleMain {
+	source ='src/main/java'
+}
+
+checkstyleTest {
+	source ='src/test/java'
 }

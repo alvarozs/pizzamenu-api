@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * DTO for Pizza entity.
+ * DTO for Pizza model.
  */
 @Data
 @AllArgsConstructor
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(exclude = {"toppings"})
 public class PizzaDTO {
   /**
-   * Identifier.
+   * Identifier of the Pizza.
    */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class PizzaDTO {
   private String name;
 
   /**
-   * All related toppings associated to the pizza.
+   * All the toppings associated to the pizza.
    */
   @ApiModelProperty(hidden = true)
   private Set<ToppingDTO> toppings = new HashSet<>();
