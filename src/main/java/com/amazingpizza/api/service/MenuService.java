@@ -5,33 +5,35 @@ import com.amazingpizza.api.service.exception.MenuNotFoundException;
 
 import java.util.Set;
 
+/**
+ * Service for menu resources.
+ */
 public interface MenuService {
 
   /**
-   * Retrieves all the pizzas in the system
-   * @return list of all pizzas
+   * Retrieves all the pizzas in the system.
+   * @return list of all pizzas.
    */
   Set<Menu> getAllMenus();
 
   /**
    * Adds a pizza definition to the menu.
-   * This could be a HATEOS approach, the response could contains the next endpoit to request GET /pizza
-   * @return the Menu update with the new pizza
+   * @return the Menu update with the new pizza.
    */
   Menu addPizza(Long menuId, Long pizzaId);
 
   /**
-   * Gets Menu by given Id
-   * @param menuId Menu identifier
-   * @return Menu found
-   * @throws MenuNotFoundException
+   * Gets Menu by given Id.
+   * @param menuId Menu identifier.
+   * @return Menu found.
+   * @throws MenuNotFoundException exception for not found menu.
    */
   Menu getMenuById(Long menuId) throws MenuNotFoundException;
 
   /**
-   * Registers a new menu
-   * @param menu the new menu to register
-   * @return the created Menu
+   * Registers a new menu.
+   * @param menu the new menu to register.
+   * @return the created Menu.
    */
   Menu addMenu(Menu menu);
 }

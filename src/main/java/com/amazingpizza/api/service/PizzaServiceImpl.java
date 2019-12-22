@@ -5,68 +5,94 @@ import com.amazingpizza.api.model.Topping;
 import com.amazingpizza.api.repository.PizzaRepository;
 import com.amazingpizza.api.service.exception.PizzaNotFoundException;
 import com.amazingpizza.api.service.exception.ToppingNotFoundException;
+import java.util.Set;
+import java.util.stream.Collectors;
+import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
+/**
+ * {@inheritDoc}
+ */
+@NoArgsConstructor
 @Service
 public class PizzaServiceImpl implements PizzaService {
+  /**
+   * Logger.
+   */
+  private static final Logger LOG = LogManager.getLogger(PizzaServiceImpl.class);
+
+  /**
+   * Repository of the Pizza.
+   */
   @Autowired
   private PizzaRepository pizzaRepository;
 
+  /**
+   * Repository of the Topping.
+   */
   @Autowired
   private ToppingService toppingService;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Set<Pizza> getAllPizzas() {
-    return pizzaRepository.findAll().stream().collect(Collectors.toSet());
+    return pizzaRepository.findAll().stream().collect(Collectors.toSet()); //NOPMD
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public Pizza getPizzaById(Long pizzaId) {
-    Pizza pizza = pizzaRepository.findById(pizzaId).orElse(null);
-    return new Pizza(pizzaId, pizza.getName());
+  public Pizza getPizzaById(final Long pizzaId) {
+    return pizzaRepository.findById(pizzaId).orElse(null); //NOPMD
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public Pizza addPizza(Pizza pizzaDTO) {
-    Pizza pizza = new Pizza();
-    pizza.setName(pizzaDTO.getName());
-    Pizza savedPizza = pizzaRepository.save(pizza);
-    return this.getPizzaById(savedPizza.getId());
+  public Pizza addPizza(final Pizza pizza) {
+    return pizzaRepository.save(pizza);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public Pizza addTopping(Long pizzaId, Long toppingId) {
-    Pizza pizza = null;
+  public Pizza addToppingToPizza(final Long pizzaId, final Long toppingId) {
+    Pizza pizza = null; // NOPMD
     try {
-      pizza = pizzaRepository.findById(pizzaId).orElseThrow(() -> new PizzaNotFoundException(pizzaId));
-      Topping topping = toppingService.getToppingById(toppingId);
+      pizza = pizzaRepository.findById(pizzaId)
+              .orElseThrow(() -> new PizzaNotFoundException(pizzaId)); // NOPMD
+      final Topping topping = toppingService.getToppingById(toppingId);
       pizza.addTopping(topping);
       pizzaRepository.save(pizza);
-    } catch (PizzaNotFoundException e) {
-      e.printStackTrace();
-    } catch (ToppingNotFoundException e) {
-      e.printStackTrace();
+    } catch (PizzaNotFoundException | ToppingNotFoundException e) {
+      LOG.error(e.getMessage());
     }
 
-    return new Pizza(pizza.getId(), pizza.getName());
+    return pizza;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public void deleteTopping(Long pizzaId, Long toppingId) {
-    Pizza pizza = null;
+  public void deleteTopping(final Long pizzaId, final Long toppingId) {
+    Pizza pizza = null; // NOPMD
     try {
-      pizza = pizzaRepository.findById(pizzaId).orElseThrow(() -> new PizzaNotFoundException(pizzaId));
-      Topping topping = toppingService.getToppingById(toppingId);
-      pizza.getToppings().remove(topping);
+      pizza = pizzaRepository.findById(pizzaId)
+              .orElseThrow(() -> new PizzaNotFoundException(pizzaId)); // NOPMD
+      final Topping topping = toppingService.getToppingById(toppingId);
+      pizza.deleteTopping(topping);
       pizzaRepository.save(pizza);
-    } catch (PizzaNotFoundException e) {
-      e.printStackTrace();
-    } catch (ToppingNotFoundException e) {
-      e.printStackTrace();
+    } catch (PizzaNotFoundException | ToppingNotFoundException e) {
+      LOG.error(e.getMessage());
     }
   }
 }

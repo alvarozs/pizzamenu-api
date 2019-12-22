@@ -8,6 +8,26 @@ This stack was used on this project:
 * Lombok
 * PostgreSQL
 * Swagger
+* Log4J2
+
+**Features**
+
+* Static Analysis
+    - PMD
+    - SonarQube (SonarLint IntelliJ IDEA)
+    - Checkstyle (Google styles)
+
+* Onion Architecture like
+
+**Pending Features**
+
+* Security
+    - RBAC
+    - Auditing
+* Spring JPA
+* Service Stub
+* Coverage - Unit Tests
+* Swagger documentation 
 
 **Pre-requisites**
 
