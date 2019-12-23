@@ -1,7 +1,7 @@
 package com.amazingpizza.api.service;
 
 import com.amazingpizza.api.model.Menu;
-import com.amazingpizza.api.service.exception.MenuNotFoundException;
+import com.amazingpizza.api.exception.MenuNotFoundException;
 
 import java.util.Set;
 
@@ -20,7 +20,7 @@ public interface MenuService {
    * Adds a pizza definition to the menu.
    * @return the Menu update with the new pizza.
    */
-  Menu addPizza(Long menuId, Long pizzaId);
+  Menu addPizza(Long menuId, Long pizzaId) throws MenuNotFoundException;
 
   /**
    * Gets Menu by given Id.

@@ -21,41 +21,41 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class PizzaMenuApiApplication {
 
-	/**
-	 * Configures the bean for CORS support.
-	 * @return
-	 */
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurerAdapter() {
-			@Override
-			public void addCorsMappings(final CorsRegistry registry) {
-				registry.addMapping("/**");
-			}
-		};
-	}
+  /**
+   * Configures the bean for CORS support.
+   * @return
+   */
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurerAdapter() {
+      @Override
+      public void addCorsMappings(final CorsRegistry registry) {
+        registry.addMapping("/**");
+      }
+    };
+  }
 
-	/**
-	 * Bean configuration for the SWAGGER documentation.
-	 * @return
-	 */
-	@Bean
-	public Docket productApi() {
-		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.amazingpizza.api")).build();
-	}
+  /**
+   * Bean configuration for the SWAGGER documentation.
+   * @return
+   */
+  @Bean
+  public Docket productApi() {
+    return new Docket(DocumentationType.SWAGGER_2).select()
+            .apis(RequestHandlerSelectors.basePackage("com.amazingpizza.api")).build();
+  }
 
-	/**
-	 * Bean for the Model mapper that will be used to convert DTO <-> Entity.
-	 * @return
-	 */
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+  /**
+   * Bean for the Model mapper that will be used to convert DTO <-> Entity.
+   * @return
+   */
+  @Bean
+  public ModelMapper modelMapper() {
+    return new ModelMapper();
+  }
 
-	public static void main(final String[] args) { // NOPMD
-		SpringApplication.run(PizzaMenuApiApplication.class, args);
-	}
+  public static void main(final String[] args) { // NOPMD
+    SpringApplication.run(PizzaMenuApiApplication.class, args);
+  }
 
 }

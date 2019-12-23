@@ -1,15 +1,14 @@
 package com.amazingpizza.api.dto;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * DTO for Menu model.
@@ -39,8 +38,8 @@ public class MenuDTO {
 
   /**
    * Instantiates a Menu DTO with the given identifier and name.
-   * @param menuId
-   * @param name
+   * @param menuId Identifier of the Menu.
+   * @param name Name of the menu.
    */
   public MenuDTO(final Long menuId, final String name) {
     this.menuId = menuId;

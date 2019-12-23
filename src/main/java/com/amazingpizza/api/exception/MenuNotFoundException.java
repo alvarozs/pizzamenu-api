@@ -1,4 +1,4 @@
-package com.amazingpizza.api.service.exception;
+package com.amazingpizza.api.exception;
 
 /**
  * Exception for Menu not found.

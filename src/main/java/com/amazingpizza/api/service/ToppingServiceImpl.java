@@ -2,7 +2,7 @@ package com.amazingpizza.api.service;
 
 import com.amazingpizza.api.model.Topping;
 import com.amazingpizza.api.repository.ToppingRepository;
-import com.amazingpizza.api.service.exception.ToppingNotFoundException;
+import com.amazingpizza.api.exception.ToppingNotFoundException;
 import java.util.List;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;

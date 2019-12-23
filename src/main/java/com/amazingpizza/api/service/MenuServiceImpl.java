@@ -1,9 +1,9 @@
 package com.amazingpizza.api.service;
 
+import com.amazingpizza.api.exception.MenuNotFoundException;
 import com.amazingpizza.api.model.Menu;
 import com.amazingpizza.api.model.Pizza;
 import com.amazingpizza.api.repository.MenuRepository;
-import com.amazingpizza.api.service.exception.MenuNotFoundException;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
@@ -47,16 +47,11 @@ public class MenuServiceImpl implements MenuService {
    * {@inheritDoc}
    */
   @Override
-  public Menu addPizza(final Long menuId, final Long pizzaId) {
-    Menu menu = null; // NOPMD
-    try {
-      menu = this.getMenuById(menuId);
-      final Pizza pizza = pizzaService.getPizzaById(pizzaId);
-      menu.addPizza(pizza);
-      menuRepository.save(menu);
-    } catch (MenuNotFoundException e) {
-      LOG.error(e.getMessage());
-    }
+  public Menu addPizza(final Long menuId, final Long pizzaId) throws MenuNotFoundException {
+    Menu menu = this.getMenuById(menuId);
+    final Pizza pizza = pizzaService.getPizzaById(pizzaId);
+    menu.addPizza(pizza);
+    menuRepository.save(menu);
 
     return menu;
   }
