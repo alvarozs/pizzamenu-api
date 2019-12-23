@@ -52,13 +52,25 @@ public class PizzaController {
   }
 
   /**
+   * Gets a pizza with the given id.
+   * @return a pizza with all embedded toppings.
+   */
+  @GetMapping("/{pizzaId}")
+  public ResponseEntity<PizzaDTO> getPizza(final @PathVariable Long pizzaId) {
+    final Pizza pizza = pizzaService.getPizzaById(pizzaId);
+    return new ResponseEntity<>(mapToDTO(pizza), HttpStatus.OK);
+  }
+
+  /**
    * Add a pizza to the DB.
    * @param pizzaDTO the given Pizza.
    * @return the just inserted pizza.
    */
   @PostMapping
   public ResponseEntity<PizzaDTO> addPizza(final @Valid @RequestBody PizzaDTO pizzaDTO) {
-    return new ResponseEntity<>(mapToDTO(pizzaService.addPizza(mapToEntity(pizzaDTO))), HttpStatus.CREATED);
+    return new ResponseEntity<>(
+            mapToDTO(pizzaService.addPizza(mapToEntity(pizzaDTO))),
+            HttpStatus.CREATED);
   }
 
   /**
@@ -68,8 +80,12 @@ public class PizzaController {
    * @return the just updated pizza.
    */
   @PostMapping("/{pizzaId}/toppings/{toppingId}")
-  public ResponseEntity<PizzaDTO> addToppingToPizza(final @PathVariable Long pizzaId, final @PathVariable Long toppingId) {
-    return new ResponseEntity<>(mapToDTO(pizzaService.addToppingToPizza(pizzaId, toppingId)), HttpStatus.CREATED);
+  public ResponseEntity<PizzaDTO> addToppingToPizza(
+          final @PathVariable Long pizzaId,
+          final @PathVariable Long toppingId) {
+    return new ResponseEntity<>(
+            mapToDTO(pizzaService.addToppingToPizza(pizzaId, toppingId)),
+            HttpStatus.CREATED);
   }
 
   /**
@@ -79,7 +95,9 @@ public class PizzaController {
    * @return a success message.
    */
   @DeleteMapping("/{pizzaId}/toppings/{toppingId}")
-  public ResponseEntity<String> deleteToppingFromPizza(final @PathVariable Long pizzaId, final @PathVariable Long toppingId) {
+  public ResponseEntity<String> deleteToppingFromPizza(
+          final @PathVariable Long pizzaId,
+          final @PathVariable Long toppingId) {
     pizzaService.deleteTopping(pizzaId, toppingId);
     return new ResponseEntity<>("Topping successfully deleted", HttpStatus.OK);
   }
