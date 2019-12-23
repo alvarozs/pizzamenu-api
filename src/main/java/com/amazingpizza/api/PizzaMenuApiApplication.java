@@ -30,7 +30,9 @@ public class PizzaMenuApiApplication {
     return new WebMvcConfigurerAdapter() {
       @Override
       public void addCorsMappings(final CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**")
+                .allowedMethods("*")
+                .allowedOrigins("*");
       }
     };
   }
