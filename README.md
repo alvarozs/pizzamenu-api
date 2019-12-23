@@ -1,4 +1,5 @@
-#PizzaMenu REST API
+PizzaMenu REST API
+--------
 
 This stack was used on this project:
 
@@ -7,7 +8,7 @@ This stack was used on this project:
 * Spring DATA JPA 
 * Lombok
 * PostgreSQL
-* Swagger
+* Swagger2
 * Log4J2
 
 **Features**
@@ -21,13 +22,13 @@ This stack was used on this project:
 
 **Pending Features**
 
+* Authorization
 * Security
-    - RBAC
-    - Auditing
-* Spring JPA
-* Service Stub
+* Service Stub EP
 * Coverage - Unit Tests
-* Swagger documentation 
+* Increase Swagger documentation 
+* Auditing
+* Increase error handling
 
 **Pre-requisites**
 
